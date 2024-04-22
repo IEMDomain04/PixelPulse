@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/login_page.dart';
+import 'package:pixelpulse/splashscreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PixelPulse',
-      theme: ThemeData(),
-      home: const LoginPage(), //Login Page of the App
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: SplashScreen(), // Show the splash screen first
     );
   }
 }
