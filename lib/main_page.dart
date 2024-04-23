@@ -21,10 +21,10 @@ class MainPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
-                Icons.account_circle,
-                size: 100.0,
-                color: Colors.blue,
+              Image.asset(
+                'assets/icons/pixelpulseicon.png',
+                width: 100.0,
+                height: 100.0,
               ),
               SizedBox(height: 20.0),
               Text(
