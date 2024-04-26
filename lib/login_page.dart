@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
 
+//Log in page, yung may user and password, na may logo saka yung "Dont have an account?"
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
