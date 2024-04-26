@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Infos about sa UIUX day 1 pinagkuhanan ng IDea???
 class Day1Page extends StatelessWidget {
   const Day1Page({Key? key}) : super(key: key);
 
