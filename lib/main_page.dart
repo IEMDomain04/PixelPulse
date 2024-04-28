@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-//Ito yung after sign in na page kumbaga pinaka main page.
+/*
+-Logo ng PixelPulse
+-Header and subeheader para sa pixelPulse.
+-Back buttons?
+*/
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
