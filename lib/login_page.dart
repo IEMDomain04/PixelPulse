@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
 
-//Log in page, yung may user and password, na may logo saka yung "Dont have an account?"
+/*
+-Background Gradient
+-Email and Password Text box format
+-Add buttons
+-Add the Facebook, IG, and Google logos
+-"Dont have an Account?" animation slider
+*/
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
