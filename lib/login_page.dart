@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 201, 62, 217),
+              Color.fromARGB(255, 193, 35, 211),
               Colors.purple[700]!,
             ],
           ),
@@ -40,19 +40,18 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20.0),
                 TextField(
                   controller: _emailController,
-                  style: TextStyle(color: Colors.white), // <-- Text color
+                  style:
+                      TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
                     hintText: 'Email or Username',
                     filled: true,
                     fillColor: Color.fromARGB(255, 59, 0, 209),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.white), // <-- Border color
+                      borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.white), // <-- Border color
+                      borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
@@ -60,19 +59,18 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20.0),
                 TextField(
                   controller: _passwordController,
-                  style: TextStyle(color: Colors.white), // <-- Text color
+                  style:
+                      TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
                     hintText: 'Password',
                     filled: true,
                     fillColor: Color.fromARGB(255, 59, 0, 209),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.white), // <-- Border color
+                      borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.white), // <-- Border color
+                      borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
