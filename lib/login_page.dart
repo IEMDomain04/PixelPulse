@@ -35,7 +35,10 @@ class _LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.purple[200]!, Colors.purple[700]!],
+            colors: [
+              const Color.fromARGB(255, 85, 68, 87)!,
+              Colors.purple[700]!
+            ],
           ),
         ),
         child: Padding(
