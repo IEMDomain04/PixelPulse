@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
 
-/*
-PLANS:
--Background Gradient
--Email and Password Text box format
--Add buttons
--Add the Facebook, IG, and Google logos
--"Dont have an Account?" animation slider
-*/
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -19,10 +11,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _artistTypeController = TextEditingController();
-
-  bool _showAdditionalInfo = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +21,8 @@ class _LoginPageState extends State<LoginPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color.fromARGB(255, 85, 68, 87)!,
-              Colors.purple[700]!
+              Color.fromARGB(255, 201, 62, 217),
+              Colors.purple[700]!,
             ],
           ),
         ),
@@ -52,19 +40,41 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20.0),
                 TextField(
                   controller: _emailController,
+                  style: TextStyle(color: Colors.white), // <-- Text color
                   decoration: InputDecoration(
                     hintText: 'Email or Username',
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Color.fromARGB(255, 59, 0, 209),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.white), // <-- Border color
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.white), // <-- Border color
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.0),
                 TextField(
                   controller: _passwordController,
+                  style: TextStyle(color: Colors.white), // <-- Text color
                   decoration: InputDecoration(
                     hintText: 'Password',
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Color.fromARGB(255, 59, 0, 209),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.white), // <-- Border color
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.white), // <-- Border color
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                   obscureText: true,
                 ),
@@ -78,45 +88,25 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     );
                   },
-                  child: Text('Login'),
-                ),
-                SizedBox(height: 20.0),
-                Visibility(
-                  visible: _showAdditionalInfo,
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    height: _showAdditionalInfo ? 200.0 : 0.0,
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: _fullNameController,
-                          decoration: InputDecoration(
-                            hintText: 'Full Name',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        TextField(
-                          controller: _artistTypeController,
-                          decoration: InputDecoration(
-                            hintText: 'Type of Artist',
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                      ],
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                ),
-                SizedBox(height: 10.0),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _showAdditionalInfo = !_showAdditionalInfo;
-                    });
-                  },
-                  child: Text('Don\'t have an account?'),
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
