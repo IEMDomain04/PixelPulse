@@ -21,8 +21,8 @@ class _LoginPageState extends State<LoginPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 193, 35, 211),
-              Colors.purple[700]!,
+              Color.fromARGB(171, 252, 114, 255),
+              Color.fromARGB(255, 25, 46, 255)!,
             ],
           ),
         ),
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                   size: 100.0,
                   color: Colors.blue,
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 10.0),
                 TextField(
                   controller: _emailController,
                   style:
