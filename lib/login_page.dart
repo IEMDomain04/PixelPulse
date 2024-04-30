@@ -39,11 +39,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 10.0),
                 TextField(
+                  style: TextStyle(color: Colors.white),
                   controller: _emailController,
-                  style:
-                      TextStyle(color: Colors.white), // Set text color to white
                   decoration: InputDecoration(
-                    hintText: 'Email or Username',
+                    label: Text('Email or Username'),
                     filled: true,
                     fillColor: Color.fromARGB(255, 59, 0, 209),
                     enabledBorder: OutlineInputBorder(
