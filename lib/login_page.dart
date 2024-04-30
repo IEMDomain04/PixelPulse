@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
 
 /*
+PLANS:
 -Background Gradient
 -Email and Password Text box format
 -Add buttons
