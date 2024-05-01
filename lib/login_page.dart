@@ -10,18 +10,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       //Background
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(171, 252, 114, 255),
-              Color.fromARGB(255, 35, 19, 255),
-            ],
-          ),
+      backgroundColor: Colors.blueAccent,
+      //Body
+      //Wrap: SafeArea Widget - For the text inside the phone
+      body: SafeArea(
+        child: Column(
+          children: [
+            Text('Hello'),
+          ],
         ),
       ),
     );
