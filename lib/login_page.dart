@@ -18,7 +18,22 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Text('Hello'),
+            //App Logo
+
+            //App Title
+            Text('PixelPulse'),
+
+            //Email or Username TxtField
+
+            //Password TxtField
+
+            //Check for terms and conditions
+
+            //Pink Login button
+
+            //----or----
+
+            //Icons ng Socmed
           ],
         ),
       ),
