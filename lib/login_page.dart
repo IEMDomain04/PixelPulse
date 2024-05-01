@@ -105,9 +105,11 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 10,
                           color: Colors.white)),
                 ],
-              )
+              ),
+              SizedBox(height: 20),
 
               //Pink Login button
+              Container(child: Text('Login')),
 
               //----or----
 
