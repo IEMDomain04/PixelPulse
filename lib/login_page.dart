@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       //Background
       backgroundColor: Colors.blueAccent,
+
       //Body
       //Wrap: SafeArea Widget - For the text inside the phone
       body: SafeArea(
@@ -32,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 180, // Set the height as needed
                   ),
                 ),
+
                 //App Title
                 //SizedBox for padding
                 SizedBox(height: 0),
