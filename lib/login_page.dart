@@ -8,6 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,9 +114,11 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Checkbox(
                           checkColor: Colors.white,
-                          value: true,
+                          value: isChecked,
                           onChanged: (bool? value) {
-                            //Logic for the pressed ox
+                            setState(() {
+                              isChecked = value!;
+                            });
                           },
                         ),
                         Text('I read and agree to ',
@@ -177,13 +181,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 10),
 
-                  //Don't have an account?
+                  //Bottom sheet button
                   TextButton(
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
-                          return Container(
+                          return AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
                             height: 200,
                             color: Colors.white,
                             child: Center(
