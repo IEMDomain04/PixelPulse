@@ -122,6 +122,16 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: Colors.white)),
 
                 //Icons ng Socmed
+                Row(
+                  children: [
+                    Image.asset(assets / facebookicon.png),
+                    Image.asset(assets / googleicon.png),
+                    Image.asset(assets / instagramicon.png),
+                  ],
+                ),
+                SizedBox(height: 10),
+
+                //Don't have an account?
               ],
             ),
           ),
