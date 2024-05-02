@@ -11,44 +11,55 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
+      //Background
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.purple[200]!, Colors.purple[700]!],
+            colors: [
+              Color.fromARGB(171, 252, 88, 255), // Top color
+              Color.fromARGB(255, 35, 19, 255), // Bottom color
+            ],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                'assets/icons/pixelpulseicon.png',
-                width: 100.0,
-                height: 100.0,
+        //Body
+        //Wrap: SafeArea Widget - For the text inside the phone
+        child: SafeArea(
+          //Center - For contents center
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  //App Logo
+                  Image.asset(
+                    'assets/pixelpulseicon.png',
+                    width: 200, // Set the width as needed
+                    height: 180, // Set the height as needed
+                  ),
+
+                  //App Title
+                  //SizedBox for padding
+                  Text(
+                    'Welcome to PixelPulse',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    'Easy. Create. Design. Share. Collab.',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.white),
+                  ),
+                  SizedBox(height: 30),
+
+                  // Add your other widgets here
+                ],
               ),
-              SizedBox(height: 20.0),
-              Text(
-                'Welcome to PixelPulse',
-                style: TextStyle(fontSize: 16.0),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'Easy. Create. Design. Share. Collab.',
-                style: TextStyle(fontSize: 16.0),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  // Add login functionality here
-                },
-                child: Text('Login'),
-              ),
-            ],
+            ),
           ),
         ),
       ),

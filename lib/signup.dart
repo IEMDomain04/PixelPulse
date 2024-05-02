@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pixelpulse/main_page.dart';
 
 void bottomSheetSignIn1(BuildContext context) {
   bool maleSelected = false;
@@ -688,7 +689,12 @@ void bottomSheetComplete(BuildContext context) {
 
               ElevatedButton(
                 onPressed: () {
-                  bottomSheetArtist(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainPage(),
+                    ),
+                  );
                 },
                 child: Text('Finish'),
                 style: ElevatedButton.styleFrom(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pixelpulse/main_page.dart';
 import 'package:pixelpulse/signup.dart';
 
 class LoginPage extends StatefulWidget {
@@ -140,7 +141,12 @@ class _LoginPageState extends State<LoginPage> {
                   //Pink Login button
                   ElevatedButton(
                     onPressed: () {
-                      // Add your login logic here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainPage(),
+                        ),
+                      );
                     },
                     child: Text('Login'),
                     style: ElevatedButton.styleFrom(
