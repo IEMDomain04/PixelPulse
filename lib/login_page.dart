@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                   //Bottom sheet button
                   TextButton(
                     onPressed: () {
-                      bottomSheetSignIn(context);
+                      bottomSheetSignIn1(context);
                     },
                     child: Text('Don\'t have an account?'),
                     style: TextButton.styleFrom(
