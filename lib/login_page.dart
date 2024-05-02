@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pixelpulse/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -184,22 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                   //Bottom sheet button
                   TextButton(
                     onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AnimatedContainer(
-                            duration: Duration(milliseconds: 500),
-                            height: 200,
-                            color: Colors.white,
-                            child: Center(
-                              child: Text(
-                                'Your Bottom Sheet Content Here',
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                      bottomSheetSignIn(context);
                     },
                     child: Text('Don\'t have an account?'),
                     style: TextButton.styleFrom(
