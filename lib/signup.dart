@@ -615,6 +615,7 @@ void bottomSheetArtist(BuildContext context) {
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: Text('Already have an account?'),
                 style: TextButton.styleFrom(
