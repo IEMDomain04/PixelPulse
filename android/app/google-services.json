@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "590372011957",
+    "project_id": "pixelpulse-auth",
+    "storage_bucket": "pixelpulse-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590372011957:android:3d511daf7703be2eac63fc",
+        "android_client_info": {
+          "package_name": "com.example.pixelpulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3FqRgPAIIDsF44L-RU578-_28LLcBhgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

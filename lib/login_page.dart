@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
-import 'package:pixelpulse/signup.dart';
+import 'package:pixelpulse/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -191,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                   //Bottom sheet button
                   TextButton(
                     onPressed: () {
-                      bottomSheetSignIn1(context);
+                      SignInProcess(context);
                     },
                     child: Text('Don\'t have an account?'),
                     style: TextButton.styleFrom(
