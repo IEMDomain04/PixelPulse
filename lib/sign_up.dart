@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pixelpulse/signup.dart';
 
@@ -8,6 +9,23 @@ void SignInProcess(BuildContext context) {
   //Password Controller
   final _passwordController = TextEditingController();
 
+  //For Firebase Database
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _usernameController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
+
+  //Dispose: For memory management, I guess.
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    dispose();
+  }
+
+  //Male or Female
   bool maleSelected = false;
   bool femaleSelected = false;
 
@@ -123,31 +141,6 @@ void SignInProcess(BuildContext context) {
                   ),
                   SizedBox(height: 10),
 
-                  //Email TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 72, 18, 255),
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
-                        child: TextField(
-                          style: TextStyle(color: Colors.white),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Email',
-                            hintStyle:
-                                TextStyle(fontSize: 12, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
                   Text('Gender:', style: TextStyle(color: Colors.white)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

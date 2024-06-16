@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
 import 'package:pixelpulse/sign_up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// Checking widget to manage authentication state
+class Checking extends StatelessWidget {
+  const Checking({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return MainPage(); // Show MainPage if user is authenticated
+          } else {
+            return LoginPage(); // Show LoginPage if user is not authenticated
+          }
+        },
+      ),
+    );
+  }
+}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,10 +34,38 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool isChecked = false;
 
+  // Username Controller
+  final _usernameController = TextEditingController();
+
+  // Password Controller
+  final _passwordController = TextEditingController();
+
+  // For Firebase Database
+  Future<void> signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      // Navigate to the main page or show a success message
+    } catch (e) {
+      print('Error signing in: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to sign in')),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose(); // Corrected dispose method
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Background
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -27,15 +77,12 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-        //Body
-        //Wrap: SafeArea Widget - For the text inside the phone
         child: SafeArea(
-          //Center - For contents center
           child: Center(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  //App Logo
+                  // App Logo
                   Padding(
                     padding: const EdgeInsets.only(top: 30.0),
                     child: Image.asset(
@@ -44,20 +91,18 @@ class _LoginPageState extends State<LoginPage> {
                       height: 180, // Set the height as needed
                     ),
                   ),
-
-                  //App Title
-                  //SizedBox for padding
+                  // App Title
                   SizedBox(height: 0),
                   Text(
                     'PixelPulse',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35,
-                        color: Colors.white),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 30),
-
-                  //Email or Username TxtField
+                  // Email or Username TxtField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Container(
@@ -69,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
+                          controller: _usernameController,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -81,8 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 10),
-
-                  //Password TxtField
+                  // Password TxtField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Container(
@@ -94,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
+                          controller: _passwordController,
                           style: TextStyle(color: Colors.white),
                           obscureText: true,
                           decoration: InputDecoration(
@@ -107,8 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 0),
-
-                  //Check for terms and conditions
+                  // Check for terms and conditions
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: Row(
@@ -123,35 +168,46 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           },
                         ),
-                        Text('I read and agree to ',
-                            style: TextStyle(
-                                fontSize: 8,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.white)),
-                        Text('Terms and Conditions',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 8,
-                                color: Colors.white)),
+                        Text(
+                          'I read and agree to ',
+                          style: TextStyle(
+                            fontSize: 8,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Terms and Conditions',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 8,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   SizedBox(height: 10),
-
-                  //Pink Login button
+                  // Pink Login button
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainPage(),
-                        ),
-                      );
+                    onPressed: () async {
+                      if (isChecked) {
+                        await signIn();
+                      } else {
+                        // Show a message to accept terms and conditions
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Please accept the terms and conditions'),
+                          ),
+                        );
+                      }
                     },
                     child: Text('Login'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       minimumSize: Size(200, 40),
                       foregroundColor: Colors.white,
                       backgroundColor: Color.fromARGB(255, 255, 16, 219),
@@ -159,13 +215,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  //----or----
+                  // ----or----
                   Text(
-                      '----------------------------- OR -----------------------------',
-                      style: TextStyle(color: Colors.white)),
-
-                  //Icons in Socmed
+                    '----------------------------- OR -----------------------------',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  // Icons in Socmed
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -187,8 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   SizedBox(height: 10),
-
-                  //Bottom sheet button
+                  // Bottom sheet button
                   TextButton(
                     onPressed: () {
                       SignInProcess(context);

@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-/*
--Logo ng PixelPulse
--Header and subeheader para sa pixelPulse.
--Back buttons?
-*/
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
 
