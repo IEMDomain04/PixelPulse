@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/main_page.dart';
+
+//TASKS!!
+// >Fix Textfields for decent user input
+// >Fix Next Button when user input decent credentials
+// >Fix Add user validation
 
 void SignInProcess(BuildContext context) {
   // Username Controller
@@ -15,8 +19,7 @@ void SignInProcess(BuildContext context) {
   // For Firebase Authentication
   Future<void> createAccount() async {
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _usernameController.text.trim(),
         password: _passwordController.text.trim(),
       );
