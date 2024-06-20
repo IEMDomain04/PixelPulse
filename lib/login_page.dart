@@ -3,27 +3,7 @@ import 'package:pixelpulse/main_page.dart';
 import 'package:pixelpulse/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// Checking widget to manage authentication state
-class Checking extends StatelessWidget {
-  const Checking({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return MainPage(); // Show MainPage if user is authenticated
-          } else {
-            return LoginPage(); // Show LoginPage if user is not authenticated
-          }
-        },
-      ),
-    );
-  }
-}
-
+//LoginPage
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -32,30 +12,34 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //Terms and Condition Checking.
   bool isChecked = false;
 
-  // Username Controller
+  // Username Controller.
   final _usernameController = TextEditingController();
 
-  // Password Controller
+  // Password Controller.
   final _passwordController = TextEditingController();
 
-  // For Firebase Database
+  //For Firebase Database.
   Future<void> signIn() async {
+    //User input.
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _usernameController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // Navigate to the main page or show a success message
+      // Navigate to the MainPage if Authenticated.
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainPage()),
       );
+      //User Validation for the successful entry.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign in Successful!')),
       );
     } catch (e) {
+      //User Validation for failed.
       print('Error signing in: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to sign in')),
@@ -63,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  //Dispose for Data Organization.
   @override
   void dispose() {
     _usernameController.dispose();
@@ -70,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose(); // Corrected dispose method
   }
 
+  //FrontEnd Code
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 180, // Set the height as needed
                     ),
                   ),
+
                   // App Title
                   SizedBox(height: 0),
                   Text(
@@ -109,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 30),
+
                   // Email or Username TxtField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -134,6 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 10),
+
                   // Password TxtField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -160,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 0),
+
                   // Check for terms and conditions
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
@@ -195,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 10),
+
                   // Pink Login button
                   ElevatedButton(
                     onPressed: () async {
