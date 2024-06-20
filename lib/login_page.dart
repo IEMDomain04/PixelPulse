@@ -48,6 +48,13 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text.trim(),
       );
       // Navigate to the main page or show a success message
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign in Successful!')),
+      );
     } catch (e) {
       print('Error signing in: $e');
       ScaffoldMessenger.of(context).showSnackBar(
