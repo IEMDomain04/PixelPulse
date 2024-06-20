@@ -1,31 +1,46 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/signup.dart';
+import 'package:pixelpulse/main_page.dart';
 
 void SignInProcess(BuildContext context) {
-  //Username Controller
+  // Username Controller
   final _usernameController = TextEditingController();
 
-  //Password Controller
+  // Password Controller
   final _passwordController = TextEditingController();
 
-  //For Firebase Database
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _usernameController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+  // Age Controller (added based on the provided code)
+  final _ageController = TextEditingController();
+
+  // For Firebase Authentication
+  Future<void> createAccount() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      // Navigate to the main page or show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Account created successfully')),
+      );
+      Navigator.pushReplacementNamed(context, '/main');
+    } catch (e) {
+      print('Error creating account: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create account')),
+      );
+    }
   }
 
-  //Dispose: For memory management, I guess.
-  @override
+  // Dispose controllers to avoid memory leaks
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    dispose();
+    _ageController.dispose();
   }
 
-  //Male or Female
+  // Male or Female selection state
   bool maleSelected = false;
   bool femaleSelected = false;
 
@@ -45,7 +60,7 @@ void SignInProcess(BuildContext context) {
                   Color.fromARGB(255, 27, 15, 193), // Bottom color
                 ],
               ),
-              //Bottomsheet corner radius
+              // Bottomsheet corner radius
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
@@ -65,7 +80,7 @@ void SignInProcess(BuildContext context) {
                   ),
                   SizedBox(height: 20.0),
 
-                  //Progress Bar
+                  // Progress Bar
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: LinearProgressIndicator(
@@ -77,7 +92,7 @@ void SignInProcess(BuildContext context) {
                     ),
                   ),
 
-                  //Title
+                  // Title
                   Padding(
                     padding: const EdgeInsets.only(top: 70.0, bottom: 20.0),
                     child: Text('Sign Up',
@@ -88,7 +103,7 @@ void SignInProcess(BuildContext context) {
                   ),
                   SizedBox(height: 20),
 
-                  //Username Textfield
+                  // Username TextField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Container(
@@ -104,7 +119,7 @@ void SignInProcess(BuildContext context) {
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Username',
+                            hintText: 'Email',
                             hintStyle:
                                 TextStyle(fontSize: 12, color: Colors.white),
                           ),
@@ -114,7 +129,33 @@ void SignInProcess(BuildContext context) {
                   ),
                   SizedBox(height: 10),
 
-                  //Password TextField
+                  // Age TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 72, 18, 255),
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
+                        child: TextField(
+                          controller: _ageController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Age',
+                            hintStyle:
+                                TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+
+                  // Password TextField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Container(
@@ -203,8 +244,9 @@ void SignInProcess(BuildContext context) {
                   ),
                   SizedBox(height: 10.0),
                   ElevatedButton(
-                    onPressed: () {
-                      bottomSheetComplete(context);
+                    onPressed: () async {
+                      await createAccount();
+                      Navigator.pop(context);
                     },
                     child: Text('Next'),
                     style: ElevatedButton.styleFrom(
