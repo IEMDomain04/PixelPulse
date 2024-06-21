@@ -16,7 +16,7 @@ void SignInProcess(BuildContext context) {
   // Age Controller (added based on the provided code)
   final _ageController = TextEditingController();
 
-  // For Firebase Authentication
+  //For Firebase Authentication
   Future<void> createAccount() async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -245,6 +245,8 @@ void SignInProcess(BuildContext context) {
                       ),
                     ],
                   ),
+
+                  //NEED SOME FIX THIS SHT
                   SizedBox(height: 10.0),
                   ElevatedButton(
                     onPressed: () async {

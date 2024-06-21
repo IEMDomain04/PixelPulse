@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/main_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void bottomSheetSignIn1(BuildContext context) {
-  bool maleSelected = false;
-  bool femaleSelected = false;
+void FBSignIn(BuildContext context) {
+  // Username Controller
+  final _usernameController = TextEditingController();
+
+  // Password Controller
+  final _passwordController = TextEditingController();
+
+  // Age Controller (added based on the provided code)
+  final _ageController = TextEditingController();
+
+  //For Firebase Authentication
+  Future<void> createAccount() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      // Navigate to the main page or show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Account created successfully')),
+      );
+      Navigator.pushReplacementNamed(context, '/main');
+    } catch (e) {
+      print('Error creating account: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create account')),
+      );
+    }
+  }
+
+  // Dispose controllers to avoid memory leaks
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _ageController.dispose();
+  }
 
   showModalBottomSheet(
     context: context,
@@ -21,7 +54,7 @@ void bottomSheetSignIn1(BuildContext context) {
                   Color.fromARGB(255, 27, 15, 193), // Bottom color
                 ],
               ),
-              //Bottomsheet corner radius
+              // Bottomsheet corner radius
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
@@ -40,26 +73,41 @@ void bottomSheetSignIn1(BuildContext context) {
                             color: Colors.white)),
                   ),
                   SizedBox(height: 20.0),
-                  //Progress Bar
+
+                  // Progress Bar
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: LinearProgressIndicator(
-                      value: 0.25, // Set the progress value (0.0 - 1.0)
+                      value: 0.5, // Set the progress value (0.0 - 1.0)
                       backgroundColor: Colors.black,
                       valueColor: AlwaysStoppedAnimation<Color>(
                         Colors.blue, // Set the progress color
                       ),
                     ),
                   ),
+                  SizedBox(height: 50),
+
                   Padding(
-                    padding: const EdgeInsets.only(top: 70.0, bottom: 20.0),
-                    child: Text('Sign Up',
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Image.asset(
+                      'assets/facebookicon.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+
+                  // Title
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+                    child: Text('Sign Up using Facebook',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 40,
                             color: Colors.white)),
                   ),
                   SizedBox(height: 20),
+
+                  // Username TextField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Container(
@@ -71,10 +119,11 @@ void bottomSheetSignIn1(BuildContext context) {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
+                          controller: _usernameController,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Username',
+                            hintText: 'Facebook Email',
                             hintStyle:
                                 TextStyle(fontSize: 12, color: Colors.white),
                           ),
@@ -83,6 +132,8 @@ void bottomSheetSignIn1(BuildContext context) {
                     ),
                   ),
                   SizedBox(height: 10),
+
+                  // Password TextField
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Container(
@@ -94,8 +145,8 @@ void bottomSheetSignIn1(BuildContext context) {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
+                          controller: _passwordController,
                           style: TextStyle(color: Colors.white),
-                          obscureText: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Password',
@@ -106,71 +157,14 @@ void bottomSheetSignIn1(BuildContext context) {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text('Gender:', style: TextStyle(color: Colors.white)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              maleSelected = !maleSelected;
-                              femaleSelected = false;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Text('Male',
-                                  style: TextStyle(color: Colors.black)),
-                              if (maleSelected)
-                                Icon(Icons.check, color: Colors.white),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(),
-                            minimumSize: Size(20, 40),
-                            backgroundColor: maleSelected
-                                ? Color.fromARGB(255, 0, 194, 242)
-                                : Colors.white,
-                            elevation: 5, // Add a shadow
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              femaleSelected = !femaleSelected;
-                              maleSelected = false;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Text('Female',
-                                  style: TextStyle(color: Colors.black)),
-                              if (femaleSelected)
-                                Icon(Icons.check, color: Colors.white),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(),
-                            minimumSize: Size(20, 40),
-                            backgroundColor: femaleSelected
-                                ? Color.fromARGB(255, 255, 82, 226)
-                                : Colors.white,
-                            elevation: 5, // Add a shadow
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  SizedBox(height: 20),
+
+                  //NEED SOME FIX THIS SHT
                   SizedBox(height: 10.0),
                   ElevatedButton(
-                    onPressed: () {
-                      bottomSheetSignIn2(context);
+                    onPressed: () async {
+                      await createAccount();
+                      Navigator.pop(context);
                     },
                     child: Text('Next'),
                     style: ElevatedButton.styleFrom(
@@ -203,525 +197,393 @@ void bottomSheetSignIn1(BuildContext context) {
   );
 }
 
-void bottomSheetSignIn2(BuildContext context) {
+void GoogleSignIn(BuildContext context) {
+  // Username Controller
+  final _usernameController = TextEditingController();
+
+  // Password Controller
+  final _passwordController = TextEditingController();
+
+  // Age Controller (added based on the provided code)
+  final _ageController = TextEditingController();
+
+  //For Firebase Authentication
+  Future<void> createAccount() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      // Navigate to the main page or show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Account created successfully')),
+      );
+      Navigator.pushReplacementNamed(context, '/main');
+    } catch (e) {
+      print('Error creating account: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create account')),
+      );
+    }
+  }
+
+  // Dispose controllers to avoid memory leaks
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _ageController.dispose();
+  }
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
-      return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 35, 19, 255), // Top color
-              Color.fromARGB(255, 27, 15, 193), // Bottom color
-            ],
-          ),
-          //Bottomsheet corner radius
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-          ),
-        ),
-        height: MediaQuery.of(context).size.height * .9,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 22.0),
-                child: Text('Creating Account',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white)),
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 35, 19, 255), // Top color
+                  Color.fromARGB(255, 27, 15, 193), // Bottom color
+                ],
               ),
-              SizedBox(height: 20.0),
-
-              //Progress Bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: LinearProgressIndicator(
-                  value: 0.5, // Set the progress value (0.0 - 1.0)
-                  backgroundColor: Colors.black,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.blue, // Set the progress color
+              // Bottomsheet corner radius
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+            height: MediaQuery.of(context).size.height * .9,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22.0),
+                    child: Text('Creating Account',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white)),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 100.0),
-                child: Text('Enter your Email',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.white)),
-              ),
-              Text('With this we can notify you for trends and latest updates.',
-                  style: TextStyle(fontSize: 10, color: Colors.white)),
-              SizedBox(height: 50),
+                  SizedBox(height: 20.0),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 72, 18, 255),
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
-                    child: TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Email',
-                        hintStyle: TextStyle(fontSize: 12, color: Colors.white),
+                  // Progress Bar
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: LinearProgressIndicator(
+                      value: 0.5, // Set the progress value (0.0 - 1.0)
+                      backgroundColor: Colors.black,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.blue, // Set the progress color
                       ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(height: 30),
+                  SizedBox(height: 50),
 
-              //----or----
-              Text(
-                  '----------------------------- OR -----------------------------',
-                  style: TextStyle(color: Colors.white)),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Image.asset(
+                      'assets/googleicon.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
 
-              //Icons in Socmed
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                  // Title
                   Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Image.asset('assets/facebookicon.png',
-                        width: 30, height: 30),
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+                    child: Text('Sign Up using Google',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                            color: Colors.white)),
                   ),
+                  SizedBox(height: 20),
+
+                  // Username TextField
                   Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Image.asset('assets/googleicon.png',
-                        width: 30, height: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 72, 18, 255),
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
+                        child: TextField(
+                          controller: _usernameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Google Email',
+                            hintStyle:
+                                TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 10),
+
+                  // Password TextField
                   Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Image.asset('assets/instagramicon.png',
-                        width: 30, height: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 72, 18, 255),
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
+                        child: TextField(
+                          controller: _passwordController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Password',
+                            hintStyle:
+                                TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  //NEED SOME FIX THIS SHT
+                  SizedBox(height: 10.0),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await createAccount();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Next'),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      minimumSize: Size(200, 40),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color.fromARGB(255, 255, 16, 219),
+                      elevation: 5, // Add a shadow
+                    ),
+                  ),
+                  SizedBox(height: 80.0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Already have an account?'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      textStyle: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
-
-              ElevatedButton(
-                onPressed: () {
-                  bottomSheetArtist(context);
-                },
-                child: Text('Next'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  minimumSize: Size(200, 40),
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color.fromARGB(255, 255, 16, 219),
-                  elevation: 5, // Add a shadow
-                ),
-              ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Previous', style: TextStyle(color: Colors.white)),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 12),
-                ),
-              ),
-              SizedBox(height: 30.0),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: Text('Already have an account?'),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     },
   );
 }
 
-void bottomSheetArtist(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 35, 19, 255), // Top color
-              Color.fromARGB(255, 27, 15, 193), // Bottom color
-            ],
-          ),
-          //Bottomsheet corner radius
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-          ),
-        ),
-        height: MediaQuery.of(context).size.height * .9,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 22.0),
-                child: Text('Creating Account',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white)),
-              ),
-              SizedBox(height: 20.0),
+void IGSignIn(BuildContext context) {
+  // Username Controller
+  final _usernameController = TextEditingController();
 
-              //Progress Bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: LinearProgressIndicator(
-                  value: 0.75, // Set the progress value (0.0 - 1.0)
-                  backgroundColor: Colors.black,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.blue, // Set the progress color
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Text('The kind of Artist',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.white)),
-              ),
-              Text('Which style you prefer? Choose 1 or more!',
-                  style: TextStyle(fontSize: 10, color: Colors.white)),
-              SizedBox(height: 10),
+  // Password Controller
+  final _passwordController = TextEditingController();
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle male selection
-                      },
-                      child: Text('Sketching'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle female selection
-                      },
-                      child: Text('Anime'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+  // Age Controller (added based on the provided code)
+  final _ageController = TextEditingController();
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle male selection
-                      },
-                      child: Text('Pixel Art'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle female selection
-                      },
-                      child: Text('Realism'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle male selection
-                      },
-                      child: Text('Architecture'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle female selection
-                      },
-                      child: Text('Doodle'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle male selection
-                      },
-                      child: Text('Comic Style'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Handle female selection
-                      },
-                      child: Text('3D Art'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        minimumSize: Size(20, 40),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                        elevation: 5, // Add a shadow
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  bottomSheetComplete(context);
-                },
-                child: Text('Next'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  minimumSize: Size(200, 40),
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color.fromARGB(255, 255, 16, 219),
-                  elevation: 5, // Add a shadow
-                ),
-              ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Previous', style: TextStyle(color: Colors.white)),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 12),
-                ),
-              ),
-              SizedBox(height: 20.0),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: Text('Already have an account?'),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
-          ),
-        ),
+  //For Firebase Authentication
+  Future<void> createAccount() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _usernameController.text.trim(),
+        password: _passwordController.text.trim(),
       );
-    },
-  );
-}
+      // Navigate to the main page or show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Account created successfully')),
+      );
+      Navigator.pushReplacementNamed(context, '/main');
+    } catch (e) {
+      print('Error creating account: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create account')),
+      );
+    }
+  }
 
-void bottomSheetComplete(BuildContext context) {
+  // Dispose controllers to avoid memory leaks
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _ageController.dispose();
+  }
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
-      return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 35, 19, 255), // Top color
-              Color.fromARGB(255, 27, 15, 193), // Bottom color
-            ],
-          ),
-          //Bottomsheet corner radius
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-          ),
-        ),
-        height: MediaQuery.of(context).size.height * .9,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 250.0),
-                child: Text('Creating Account',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white)),
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 35, 19, 255), // Top color
+                  Color.fromARGB(255, 27, 15, 193), // Bottom color
+                ],
               ),
-              SizedBox(height: 20.0),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Text('Complete!',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.white)),
+              // Bottomsheet corner radius
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
-              SizedBox(height: 20.0),
-              //Progress Bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: LinearProgressIndicator(
-                  value: 1, // Set the progress value (0.0 - 1.0)
-                  backgroundColor: Colors.black,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.blue, // Set the progress color
+            ),
+            height: MediaQuery.of(context).size.height * .9,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22.0),
+                    child: Text('Creating Account',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white)),
                   ),
-                ),
-              ),
-              SizedBox(height: 30),
+                  SizedBox(height: 20.0),
 
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MainPage(),
+                  // Progress Bar
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: LinearProgressIndicator(
+                      value: 0.5, // Set the progress value (0.0 - 1.0)
+                      backgroundColor: Colors.black,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.blue, // Set the progress color
+                      ),
                     ),
-                  );
-                },
-                child: Text('Finish'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  minimumSize: Size(200, 40),
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color.fromARGB(255, 255, 16, 219),
-                  elevation: 5, // Add a shadow
-                ),
-              ),
+                  ),
+                  SizedBox(height: 50),
 
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Previous', style: TextStyle(color: Colors.white)),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 12),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Image.asset(
+                      'assets/instagramicon.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+
+                  // Title
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
+                    child: Text('Sign Up using Instagram',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                            color: Colors.white)),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Username TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 72, 18, 255),
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
+                        child: TextField(
+                          controller: _usernameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Instagram Email',
+                            hintStyle:
+                                TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+
+                  // Password TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 72, 18, 255),
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
+                        child: TextField(
+                          controller: _passwordController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Password',
+                            hintStyle:
+                                TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  //NEED SOME FIX THIS SHT
+                  SizedBox(height: 10.0),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await createAccount();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Next'),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      minimumSize: Size(200, 40),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color.fromARGB(255, 255, 16, 219),
+                      elevation: 5, // Add a shadow
+                    ),
+                  ),
+                  SizedBox(height: 80.0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Already have an account?'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      textStyle: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 30.0),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     },
   );

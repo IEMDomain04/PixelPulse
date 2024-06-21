@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pixelpulse/main_page.dart';
 import 'package:pixelpulse/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pixelpulse/signup.dart';
 
 //LoginPage
 class LoginPage extends StatefulWidget {
@@ -218,28 +219,59 @@ class _LoginPageState extends State<LoginPage> {
                     '----------------------------- OR -----------------------------',
                     style: TextStyle(color: Colors.white),
                   ),
+
                   // Icons in Socmed
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      //Facebook Sign in.
                       Padding(
                         padding: const EdgeInsets.all(25.0),
-                        child: Image.asset('assets/facebookicon.png',
-                            width: 30, height: 30),
+                        child: GestureDetector(
+                          onTap: () {
+                            FBSignIn(context);
+                          },
+                          child: Image.asset(
+                            'assets/facebookicon.png',
+                            width: 30,
+                            height: 30,
+                          ),
+                        ),
                       ),
+
+                      //Google Sign in.
                       Padding(
                         padding: const EdgeInsets.all(25.0),
-                        child: Image.asset('assets/googleicon.png',
-                            width: 30, height: 30),
+                        child: GestureDetector(
+                          onTap: () {
+                            GoogleSignIn(context);
+                          },
+                          child: Image.asset(
+                            'assets/googleicon.png',
+                            width: 30,
+                            height: 30,
+                          ),
+                        ),
                       ),
+
+                      //IG Sign in.
                       Padding(
                         padding: const EdgeInsets.all(25.0),
-                        child: Image.asset('assets/instagramicon.png',
-                            width: 30, height: 30),
+                        child: GestureDetector(
+                          onTap: () {
+                            IGSignIn(context);
+                          },
+                          child: Image.asset(
+                            'assets/instagramicon.png',
+                            width: 30,
+                            height: 30,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: 10),
+
                   // Bottom sheet button
                   TextButton(
                     onPressed: () {
