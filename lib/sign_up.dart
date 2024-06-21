@@ -43,10 +43,6 @@ void SignInProcess(BuildContext context) {
     _ageController.dispose();
   }
 
-  // Male or Female selection state
-  bool maleSelected = false;
-  bool femaleSelected = false;
-
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -184,67 +180,6 @@ void SignInProcess(BuildContext context) {
                     ),
                   ),
                   SizedBox(height: 10),
-
-                  Text('Gender:', style: TextStyle(color: Colors.white)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              maleSelected = !maleSelected;
-                              femaleSelected = false;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Text('Male',
-                                  style: TextStyle(color: Colors.black)),
-                              if (maleSelected)
-                                Icon(Icons.check, color: Colors.white),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(),
-                            minimumSize: Size(20, 40),
-                            backgroundColor: maleSelected
-                                ? Color.fromARGB(255, 0, 194, 242)
-                                : Colors.white,
-                            elevation: 5, // Add a shadow
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              femaleSelected = !femaleSelected;
-                              maleSelected = false;
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              Text('Female',
-                                  style: TextStyle(color: Colors.black)),
-                              if (femaleSelected)
-                                Icon(Icons.check, color: Colors.white),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(),
-                            minimumSize: Size(20, 40),
-                            backgroundColor: femaleSelected
-                                ? Color.fromARGB(255, 255, 82, 226)
-                                : Colors.white,
-                            elevation: 5, // Add a shadow
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
 
                   //NEED SOME FIX THIS SHT
                   SizedBox(height: 10.0),
