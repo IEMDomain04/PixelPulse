@@ -1,4 +1,4 @@
-# pixelpulse
+# PixelPulse
 
 A Coded Functional Project of Man's UI/UX: Day #1
 
