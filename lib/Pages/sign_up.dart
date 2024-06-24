@@ -163,6 +163,7 @@ void SignInProcess(BuildContext context) {
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
                           controller: _usernameController,
+                          cursorColor: Colors.white,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -189,6 +190,7 @@ void SignInProcess(BuildContext context) {
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
                           controller: _passwordController,
+                          cursorColor: Colors.white,
                           style: TextStyle(color: Colors.white),
                           obscureText: true,
                           decoration: InputDecoration(
