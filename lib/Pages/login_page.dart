@@ -57,6 +57,12 @@ class _LoginPageState extends State<LoginPage> {
       );
     } catch (e) {
       //User Validations.
+      if (email.isEmpty && password.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enter email address and Password')),
+        );
+        return;
+      }
 
       //Empty User Email.
       if (email.isEmpty) {

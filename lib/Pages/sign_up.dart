@@ -13,15 +13,25 @@ void SignInProcess(BuildContext context) {
   // Password Controller
   final _passwordController = TextEditingController();
 
+  // Email validation regex pattern
+  bool isValidEmail(String email) {
+    String pattern = r'^[^@]+@[^@]+\.[^@]+$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(email);
+  }
+
+  // Password validation (example: at least 6 characters, includes a number and a letter)
+  bool isValidPassword(String password) {
+    String pattern = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(password);
+  }
+
   // For Firebase Authentication
   Future<void> createAccount() async {
-    if (_usernameController.text.trim().isEmpty ||
-        _passwordController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please input decent credentials')),
-      );
-      return;
-    }
+    final String email = _usernameController.text.trim();
+    final String password = _passwordController.text.trim();
+
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _usernameController.text.trim(),
@@ -33,10 +43,45 @@ void SignInProcess(BuildContext context) {
       );
       Navigator.pushReplacementNamed(context, '/main');
     } catch (e) {
-      print('Error creating account: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to create account')),
-      );
+      //User Validations.
+      if (email.isEmpty && password.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enter email address and Password')),
+        );
+        return;
+      }
+
+      //Empty User Email.
+      if (email.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enter email address')),
+        );
+        return;
+      }
+
+      //Empty User Password.
+      if (password.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enter password')),
+        );
+        return;
+      }
+
+      //Wrong email format.
+      if (!isValidEmail(email)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please enter a valid email address')),
+        );
+        return;
+      }
+
+      //Incorrect Password.
+      if (!isValidPassword(password)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Password must be 6 Characters or more.')),
+        );
+        return;
+      }
     }
   }
 
@@ -163,7 +208,6 @@ void SignInProcess(BuildContext context) {
                   ElevatedButton(
                     onPressed: () async {
                       await createAccount();
-                      Navigator.pop(context);
                     },
                     child: Text('Next'),
                     style: ElevatedButton.styleFrom(
