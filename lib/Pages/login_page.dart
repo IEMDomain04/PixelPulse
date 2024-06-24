@@ -112,6 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
                           controller: _usernameController,
+                          textInputAction: TextInputAction.go,
+                          cursorColor: Colors.white,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -138,6 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
                         child: TextField(
                           controller: _passwordController,
+                          cursorColor: Colors.white,
+                          textInputAction: TextInputAction.go,
                           style: TextStyle(color: Colors.white),
                           obscureText: true,
                           decoration: InputDecoration(

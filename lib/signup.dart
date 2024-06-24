@@ -50,7 +50,7 @@ void FBSignIn(BuildContext context) {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 35, 19, 255), // Top color
+                  Color.fromARGB(255, 98, 87, 255), // Top color
                   Color.fromARGB(255, 27, 15, 193), // Bottom color
                 ],
               ),
@@ -246,8 +246,8 @@ void GoogleSignIn(BuildContext context) {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 35, 19, 255), // Top color
-                  Color.fromARGB(255, 27, 15, 193), // Bottom color
+                  Color.fromARGB(255, 5, 152, 0), // Top color
+                  Color.fromARGB(255, 6, 45, 171), // Bottom color
                 ],
               ),
               // Bottomsheet corner radius
@@ -442,8 +442,8 @@ void IGSignIn(BuildContext context) {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 35, 19, 255), // Top color
-                  Color.fromARGB(255, 27, 15, 193), // Bottom color
+                  Color.fromARGB(255, 180, 159, 0), // Top color
+                  Color.fromARGB(255, 183, 76, 0), // Bottom color
                 ],
               ),
               // Bottomsheet corner radius
