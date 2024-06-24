@@ -13,9 +13,6 @@ void SignInProcess(BuildContext context) {
   // Password Controller
   final _passwordController = TextEditingController();
 
-  // Age Controller (added based on the provided code)
-  final _ageController = TextEditingController();
-
   //For Firebase Authentication
   Future<void> createAccount() async {
     try {
@@ -40,7 +37,6 @@ void SignInProcess(BuildContext context) {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    _ageController.dispose();
   }
 
   showModalBottomSheet(
@@ -119,32 +115,6 @@ void SignInProcess(BuildContext context) {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Email',
-                            hintStyle:
-                                TextStyle(fontSize: 12, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-
-                  // Age TextField
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 72, 18, 255),
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
-                        child: TextField(
-                          controller: _ageController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Age',
                             hintStyle:
                                 TextStyle(fontSize: 12, color: Colors.white),
                           ),
