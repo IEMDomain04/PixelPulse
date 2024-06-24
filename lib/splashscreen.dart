@@ -7,7 +7,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Use a FutureBuilder to wait for a few seconds before navigating
     return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 5)), // Wait for 5 seconds
+      future: Future.delayed(Duration(seconds: 3)), // Wait for 5 seconds
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While waiting, show a loading indicator or your app's logo

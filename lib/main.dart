@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/Pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pixelpulse/splashscreen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: LoginPage(), // Show the splash screen first
+      home: SplashScreen(), // Show the splash screen first
     );
   }
 }
