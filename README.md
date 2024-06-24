@@ -1,6 +1,9 @@
 # pixelpulse
 
-A new Flutter project.
+A Coded Functional Project of Man's UI/UX: Day #1
+
+A simple Authentication App with Complete User Validation. 
+Implemented with Firebase Database. 
 
 ## Getting Started
 
