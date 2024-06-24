@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/login_page.dart';
+import 'package:pixelpulse/Pages/login_page.dart';
 // Import your main screen file
 
 class SplashScreen extends StatelessWidget {

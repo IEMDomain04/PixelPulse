@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pixelpulse/main_page.dart';
-import 'package:pixelpulse/sign_up.dart';
+import 'package:pixelpulse/Pages/main_page.dart';
+import 'package:pixelpulse/Pages/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pixelpulse/signup.dart';
 
@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //Background Color.
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -214,6 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 20),
+
                   // ----or----
                   Text(
                     '----------------------------- OR -----------------------------',
