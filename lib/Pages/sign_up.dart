@@ -13,8 +13,15 @@ void SignInProcess(BuildContext context) {
   // Password Controller
   final _passwordController = TextEditingController();
 
-  //For Firebase Authentication
+  // For Firebase Authentication
   Future<void> createAccount() async {
+    if (_usernameController.text.trim().isEmpty ||
+        _passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please input decent credentials')),
+      );
+      return;
+    }
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _usernameController.text.trim(),

@@ -8,9 +8,6 @@ void FBSignIn(BuildContext context) {
   // Password Controller
   final _passwordController = TextEditingController();
 
-  // Age Controller (added based on the provided code)
-  final _ageController = TextEditingController();
-
   //For Firebase Authentication
   Future<void> createAccount() async {
     try {
@@ -35,7 +32,6 @@ void FBSignIn(BuildContext context) {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    _ageController.dispose();
   }
 
   showModalBottomSheet(
@@ -204,9 +200,6 @@ void GoogleSignIn(BuildContext context) {
   // Password Controller
   final _passwordController = TextEditingController();
 
-  // Age Controller (added based on the provided code)
-  final _ageController = TextEditingController();
-
   //For Firebase Authentication
   Future<void> createAccount() async {
     try {
@@ -231,7 +224,6 @@ void GoogleSignIn(BuildContext context) {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    _ageController.dispose();
   }
 
   showModalBottomSheet(
@@ -400,9 +392,6 @@ void IGSignIn(BuildContext context) {
   // Password Controller
   final _passwordController = TextEditingController();
 
-  // Age Controller (added based on the provided code)
-  final _ageController = TextEditingController();
-
   //For Firebase Authentication
   Future<void> createAccount() async {
     try {
@@ -427,7 +416,6 @@ void IGSignIn(BuildContext context) {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    _ageController.dispose();
   }
 
   showModalBottomSheet(
