@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pixelpulse/Pages/main_page.dart';
 import 'package:pixelpulse/Pages/sign_up.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pixelpulse/signup.dart';
 
-//LoginPage
+// LoginPage
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //Terms and Condition Checking.
+  // Terms and Condition Checking.
   bool isChecked = false;
 
   // Username Controller.
@@ -22,33 +22,82 @@ class _LoginPageState extends State<LoginPage> {
   // Password Controller.
   final _passwordController = TextEditingController();
 
-  //For Firebase Database.
+  // Email validation regex pattern
+  bool isValidEmail(String email) {
+    String pattern = r'^[^@]+@[^@]+\.[^@]+$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(email);
+  }
+
+  // Password validation (example: at least 6 characters, includes a number and a letter)
+  bool isValidPassword(String password) {
+    String pattern = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$';
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(password);
+  }
+
+  // For Firebase Authentication
   Future<void> signIn() async {
-    //User input.
+    final String email = _usernameController.text.trim();
+    final String password = _passwordController.text.trim();
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _usernameController.text.trim(),
-        password: _passwordController.text.trim(),
+        email: email,
+        password: password,
       );
       // Navigate to the MainPage if Authenticated.
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainPage()),
       );
-      //User Validation for the successful entry.
+      // User Validation for the successful entry.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign in Successful!')),
       );
     } catch (e) {
-      //User Validation for failed.
-      print('Error signing in: $e');
+      //User Validations.
+
+      //Empty User Email.
+      if (email.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enter your email address')),
+        );
+        return;
+      }
+
+      //Empty User Password.
+      if (password.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Enter your password')),
+        );
+        return;
+      }
+
+      //Wrong email format.
+      if (!isValidEmail(email)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please enter a valid email address')),
+        );
+        return;
+      }
+
+      //Incorrect Password.
+      if (!isValidPassword(password)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Incorrect Password')),
+        );
+        return;
+      }
+
+      //All Wrong, cant sign in.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to sign in')),
       );
     }
   }
 
-  //Dispose for Data Organization.
+  // Dispose for Data Organization.
   @override
   void dispose() {
     _usernameController.dispose();
@@ -56,11 +105,11 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose(); // Corrected dispose method
   }
 
-  //FrontEnd Code
+  // FrontEnd Code
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Background Color.
+      // Background Color.
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -230,7 +279,7 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //Facebook Sign in.
+                      // Facebook Sign in.
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: GestureDetector(
@@ -245,7 +294,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
 
-                      //Google Sign in.
+                      // Google Sign in.
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: GestureDetector(
@@ -260,7 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
 
-                      //IG Sign in.
+                      // IG Sign in.
                       Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: GestureDetector(
