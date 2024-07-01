@@ -2,8 +2,8 @@
 
 A Coded Functional Project of Man's UI/UX: Day #1
 
-A simple Authentication App with Complete User Validation.<br/>
-Implemented with Firebase Database. 
+- A simple Authentication App with Complete User Validation.<br/>
+- Implemented with Firebase Database. 
 
 ## Getting Started
 
